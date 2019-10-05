@@ -2,25 +2,98 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- <h1>Hot Sauce</h1> -->
 
-<div class='row card'>
-  <div class='col-md-3 card-body'>
-    <img id="banner" src="https://live.staticflickr.com/7811/46576897995_a0e3efeddb_b.jpg" alt="Hot Sauce">
-    <img id="banner" src="https://live.staticflickr.com/7811/46576897995_a0e3efeddb_b.jpg" alt="Hot Sauce">
+<!-- source for this code: https://stackoverflow.com/questions/41064873/adding-a-full-width-banner-and-making-it-bootstrap-responsive -->
+<div class="header-row" id="header-row" style="padding: 0px;margin-left:-25px; overflow:hidden; height:400px;">
+        <!-- container-fluid is the same as container but spans a wider viewport,
+    it still has padding though so you need to remove this either by adding
+    another class with no padding or inline as I did below -->
+   <div class="container-fluid" style="padding: 0px;">
+      <div class="row">
+        <!-- You originally has it set up for two columns, remove the second
+    column as it is unneeded and set the first to always span all 12 columns
+    even when at its smallest (xs). Set the overflow to hidden so no matter
+    the height of your image it will never show outside this div-->
+         <div class="col-xs-12">
+            <a class="navbar-brand logo" href="/">
+        <!-- place your image here -->
+               <img src="static/img/hot_sauce_banner.png" alt="company logo" style="width: 100%;">
+            </a>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- End Source code  -->
 
+<br></br>
 
+<!-- source code: https://bootstrapious.com/p/bootstrap-quote -->
+<!-- source content: https://www.bunstersworldwide.com/pages/home -->
+<div class="container">
+  <div class="row">
+      <div class="col-lg-6 mx-auto">
+          <header class="text-center pb-5">
+              <h1 class="h2">SICK OF BLAND HOT SAUCE?</h1>
+              <p>Bootstrap snippet by <a href="https://bootstrapious.com/snippets" class="font-italic text-info">Bootstrapious</a></p>
+          </header>
+      </div>
+  </div><!-- END -->
+  <div class="row">
+      <div class="col-lg-6 mx-auto" style="text-align:center">
+          <!-- CUSTOM BLOCKQUOTE -->
+          <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded" >
+              <div class="blockquote-custom-icon bg-info shadow-sm"><i class="fa fa-quote-left text-white"></i></div>
+              <p class="mb-0 mt-2 font-italic">"For too long you've been putting up with watery, vinegary, bland hot sauces that all taste and look the same – boring!
+              You need an exciting hot sauce - you need Bunsters Shit the Bed.
+              Bunsters Fresh sauces are full of flavor and come in the most beautiful bottle you’ve ever seen.
+              Once you try it you’ll throw out all the forgotten old sauces in the back of the fridge.
+              <a href="https://www.bunstersworldwide.com/pages/home" class="text-info">@bunster</a>."</p>
+              <footer class="blockquote-footer pt-4 mt-4 border-top">
+                  <cite title="Source Title">Bunsters Worldwide</cite>
+              </footer>
+          </blockquote><!-- END -->
+
+      </div>
   </div>
 </div>
 
-<div class='container'>
-  <div class='col-md-3'>
-    <
+<br></br>
 
+<ul class="home_list">
+  {% for item in items %}
+    <li>
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src='{{ item.img }}' alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <p class="card-text">{{ item.description }}</p>
+          <p class="card-text">{{ item.price }}</p>
+          <a href="#" class="btn btn-primary">Add to cart</a>
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>
 
-  </div>
-</div>
+<br></br>
 
+<ul class="home_list">
+  {% for item in items %}
+    <li>
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src='{{ item.img }}' alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <p class="card-text">{{ item.description }}</p>
+          <p class="card-text">{{ item.price }}</p>
+          <a href="#" class="btn btn-primary">Add to cart</a>
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+
+<br></br>
 
 
 {% endblock %}

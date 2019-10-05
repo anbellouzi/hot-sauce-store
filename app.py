@@ -14,8 +14,12 @@ playlists = db.hotsauce
 app = Flask(__name__)
 
 items = [
-    { 'title': 'Hot sauce', 'description': 'hottest sauce on the planet', 'price': '$100' },
-    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100' }
+    { 'title': 'Hot sauce', 'description': 'hottest sauce on the planet', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/71Jsiqz0aiL._SL1500_.jpg' },
+    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'},
+    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'},
+    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'},
+    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'},
+    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'}
 ]
 
 @app.route('/')

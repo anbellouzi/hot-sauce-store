@@ -1,3 +1,29 @@
 #banner {
-  height: 300px
+  height: 400px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+#banner-box {
+  width: 100%;
+  text-align: center;
+}
+
+.home_list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.home_list li {
+  float: left
+}
+blockquote {
+  width: 900px;
+  margin: 0 auto;
+  margin-left: -200px;
+}
+
+.btn:hover {
+  background-color: #8b0000;
 }

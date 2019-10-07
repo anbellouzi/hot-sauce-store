@@ -1,0 +1,33 @@
+<!-- templates/partials/playlists_form.html -->
+<fieldset>
+    <legend>Edit Item</legend>
+    <!-- TITLE -->
+    <div class='form-group'>
+        <label for='playlist-title'>Title</label><br>
+        <input class='form-control' id='item-title' type='text' name='title' value='{{ item.title }}'/>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class='form-group'>
+        <label for='description'>Description</label><br>
+        <input class='form-control' id='description' type='text' name='description' value='{{ item.description }}' />
+    </div>
+
+    <!-- Price -->
+    <div class='form-group'>
+        <label for='description'>Price</label><br>
+        <input class='form-control' id='price' type='text' name='price' value='{{ item.price }}' />
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class='form-group'>
+        <label for='playlist-videos'>Images</label><br/>
+        <p class='text-muted'>Add image source</p>
+        <textarea class='form-control' id='playlist-img' name='images' rows='10' />{{ item.img }}</textarea>
+    </div>
+</fieldset>
+
+<!-- BUTTON -->
+<!-- <p>
+    <button type='submit'>Save Playlist</button>
+</p> -->

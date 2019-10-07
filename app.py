@@ -8,80 +8,98 @@ from datetime import datetime
 host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/HotSauce')
 client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
-playlists = db.hotsauce
+items = db.hotsauce
+cart = db.cart
+
 # comments = db.comments
 
 app = Flask(__name__)
 
-items = [
-    { 'title': 'Hot sauce', 'description': 'hottest sauce on the planet', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/71Jsiqz0aiL._SL1500_.jpg' },
-    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'},
-    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'},
-    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'},
-    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'},
-    { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '$100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg'}
-]
+# items = [
+#     { 'title': 'Hot sauce', 'description': 'hottest sauce on the planet', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/71Jsiqz0aiL._SL1500_.jpg', 'item_id': '1'},
+#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '12'},
+#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '123'},
+#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '1234'},
+#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '12345'},
+#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '123456'}
+# ]
 
 @app.route('/')
 def hot_sauce_index():
     """Show all playlists."""
-    return render_template('index.html', items=items)
+    return render_template('index.html', items=items.find())
 
 @app.route('/hotsauce/shop')
 def hot_sauce_show():
     """Show all playlists."""
-    return render_template('show.html', items=items)
+    return render_template('shop.html', items=items.find())
 
-# @app.route('/playlists/new')
-# def playlists_new():
-#     """Create a new playlist."""
-#     return render_template('playlists_new.html', playlist={}, title='New Playlist')
+@app.route('/item/new')
+def playlists_new():
+    """Create a new item."""
+    return render_template('new_item.html', item={}, title='New Item')
+
+@app.route('/items', methods=['POST'])
+def playlists_submit():
+    """Submit a new playlist."""
+    item = {
+        'title': request.form.get('title'),
+        'description': request.form.get('description'),
+        'price': request.form.get('price'),
+        'img': request.form.get('images'),
+        'created_at': datetime.now()
+    }
+    item_id = items.insert_one(item).inserted_id
+    return redirect(url_for('item_display', item_id=item_id))
+
+@app.route('/shop/item/<item_id>', methods=['POST', 'GET'])
+@app.route('/hotsauce/shop/item/<item_id>', methods=['POST', 'GET'])
+def item_display(item_id):
+    """Show a single playlist."""
+    item = items.find_one({'_id': ObjectId(item_id)})
+    # playlist_comments = comments.find({'item_id': ObjectId(item_id)})
+    return render_template('show_single_item.html', items=item)
+
+@app.route('/hotsauce/shop/item/shopping_cart/<item_id>', methods=['POST', 'GET'])
+@app.route('/shop/item/shopping_cart/<item_id>', methods=['POST', 'GET'])
+def shopping_cart(item_id):
+    """Show a single playlist."""
+    item = items.find_one({'_id': ObjectId(item_id)})
+    cart.item = item
+    cart.save(item)
+    cart_items = cart.find()
+
+    return render_template('shopping_cart.html', items=cart_items)
+
+
+@app.route('/items/<item_id>/edit', methods=['POST'])
+def items_edit(item_id):
+    """Show the edit form for a item."""
+    item = items.find_one({'_id': ObjectId(item_id)})
+    return render_template('edit_item.html', item=item, title='Edit Item')
 #
-# @app.route('/playlists', methods=['POST'])
-# def playlists_submit():
-#     """Submit a new playlist."""
-#     playlist = {
-#         'title': request.form.get('title'),
-#         'description': request.form.get('description'),
-#         'videos': request.form.get('videos').split(),
-#         'created_at': datetime.now()
-#     }
-#     print(playlist)
-#     playlist_id = playlists.insert_one(playlist).inserted_id
-#     return redirect(url_for('playlists_show', playlist_id=playlist_id))
-#
-# @app.route('/playlists/<playlist_id>')
-# def playlists_show(playlist_id):
-#     """Show a single playlist."""
-#     playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
-#     playlist_comments = comments.find({'playlist_id': ObjectId(playlist_id)})
-#     return render_template('playlists_show.html', playlist=playlist, comments=playlist_comments)
-#
-# @app.route('/playlists/<playlist_id>/edit')
-# def playlists_edit(playlist_id):
-#     """Show the edit form for a playlist."""
-#     playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
-#     return render_template('playlists_edit.html', playlist=playlist, title='Edit Playlist')
-#
-# @app.route('/playlists/<playlist_id>', methods=['POST'])
-# def playlists_update(playlist_id):
-#     """Submit an edited playlist."""
-#     updated_playlist = {
-#         'title': request.form.get('title'),
-#         'description': request.form.get('description'),
-#         'videos': request.form.get('videos').split(),
-#         'rating': request.form.get('rating')
-#     }
-#     playlists.update_one(
-#         {'_id': ObjectId(playlist_id)},
-#         {'$set': updated_playlist})
-#     return redirect(url_for('playlists_show', playlist_id=playlist_id))
-#
-# @app.route('/playlists/<playlist_id>/delete', methods=['POST'])
-# def playlists_delete(playlist_id):
-#     """Delete one playlist."""
-#     playlists.delete_one({'_id': ObjectId(playlist_id)})
-#     return redirect(url_for('playlists_index'))
+@app.route('/item/<item_id>', methods=['POST'])
+def items_update(item_id):
+    """Submit an edited item."""
+    updated_item = {
+        'title': request.form.get('title'),
+        'description': request.form.get('description'),
+        'price': request.form.get('price'),
+        'img': request.form.get('images'),
+    }
+    items.update_one(
+        {'_id': ObjectId(item_id)},
+        {'$set': updated_item})
+    return redirect(url_for('item_display', item_id=item_id))
+
+
+@app.route('/items/<item_id>/delete', methods=['POST'])
+def item_delete(item_id):
+    """Delete one item."""
+    items.delete_one({'_id': ObjectId(item_id)})
+    return redirect(url_for('hot_sauce_index'))
+
+
 #
 # @app.route('/playlists/comments', methods=['POST'])
 # def comments_new():

@@ -1,0 +1,22 @@
+<!-- templates/edit_item.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ul class="home_list">
+  {% for item in items %}
+    <li>
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src='{{ item.img }}' alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <p class="card-text">{{ item.description }}</p>
+          <p class="card-text">{{ item.price }}</p>
+          <a href="shop/item/{{ item._id }}" class="btn btn-primary">Buy Now</a>
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

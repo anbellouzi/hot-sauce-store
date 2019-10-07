@@ -1,0 +1,51 @@
+<!-- templates/playlists_show.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<a href='/'>Back to Home</a>
+<div class='row'>
+    <div class='col-sm-6 col-sm-offset-3'>
+      <h1>{{items.title}}</h1>
+      <h2 style="color:red">${{ items.price }}</h2>
+      <div class="card"><div class="card-body">
+          <img  style="width:300px;heigth:300px;"src="{{ items.img }}" alt="">
+      </div></div>
+
+      {% if items.created_at %}
+      <p class='text-muted'>Created on {{ items.created_at.strftime('%A, %d %B, %Y') }}
+        at {{ items.created_at.strftime('%I:%M %p') }}</p>
+      {% endif %}
+
+        <h2>{{ items.description }}</h2>
+
+
+        <ul class="action_buttons">
+          <li>
+            <p><form method='POST' action='shopping_cart/{{items._id}}'>
+                <input type='hidden' name='_method' value='CART'>
+                <button class='btn btn-primary' type='submit'>Add to cart</button>
+            </form></p>
+          </li>
+          <li>
+            <p><form method='POST' action='/items/{{items._id}}/edit'>
+                <input type='hidden' name='_method' value='EDIT'>
+                <button class='btn btn-primary' type='submit'>Edit</button>
+            </form></p>
+          </li>
+          <li>
+            <p><form method='POST' action='/items/{{items._id}}/delete'>
+                <input type='hidden' name='_method' value='DELETE'>
+                <button class='btn btn-primary' type='submit'>Delete</button>
+            </form></p>
+          </li>
+        </ul>
+
+
+
+
+
+
+
+    </div>
+</div>
+{% endblock %}

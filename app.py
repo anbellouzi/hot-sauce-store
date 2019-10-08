@@ -10,8 +10,8 @@ client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 items = db.hotsauce
 cart = db.cart
+comments = db.comments
 
-# comments = db.comments
 
 app = Flask(__name__)
 
@@ -57,15 +57,14 @@ def playlists_submit():
 def item_display(item_id):
     """Show a single playlist."""
     item = items.find_one({'_id': ObjectId(item_id)})
-    # playlist_comments = comments.find({'item_id': ObjectId(item_id)})
-    return render_template('show_single_item.html', items=item)
+    item_comments = comments.find({'item_id': ObjectId(item_id)})
+    return render_template('show_single_item.html', items=item, comments=item_comments)
 
 @app.route('/hotsauce/shop/item/shopping_cart/<item_id>', methods=['POST', 'GET'])
 @app.route('/shop/item/shopping_cart/<item_id>', methods=['POST', 'GET'])
 def add_shopping_cart(item_id):
     """Show a single playlist."""
     item = items.find_one({'_id': ObjectId(item_id)})
-    # item.update = ({'quantity': 1})
     cart.item = item
     cart.save(item)
     cart_items = cart.find()
@@ -111,26 +110,25 @@ def cart_delete(cart_id):
     return redirect(url_for('show_shopping_cart', item_id=cart_id))
 
 
-#
-# @app.route('/playlists/comments', methods=['POST'])
+# 
+# @app.route('/item/comments', methods=['POST'])
 # def comments_new():
 #     """Submit a new comment."""
 #     comment = {
 #         'title': request.form.get('title'),
 #         'content': request.form.get('content'),
-#         'playlist_id': ObjectId(request.form.get('playlist_id'))
+#         'item_id': request.form.get('item_id')
 #     }
-#     print(comment)
 #     comment_id = comments.insert_one(comment).inserted_id
-#     return redirect(url_for('playlists_show', playlist_id=request.form.get('playlist_id')))
+#     return redirect(url_for('show_single_item', item_id=request.form.get('item_id')))
 #
-# @app.route('/playlists/comments/<comment_id>', methods=['POST'])
+# @app.route('/item/comments/<comment_id>', methods=['POST'])
 # def comments_delete(comment_id):
 #     """Action to delete a comment."""
 #     comment = comments.find_one({'_id': ObjectId(comment_id)})
 #     comments.delete_one({'_id': ObjectId(comment_id)})
-#     return redirect(url_for('playlists_show', playlist_id=comment.get('playlist_id')))
-
+#     return redirect(url_for('show_single_item', item_id=comment.get('item_id')))
+#
 
 
 

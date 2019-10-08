@@ -15,7 +15,7 @@
       <label class="product-line-price">Total</label>
     </div>
 
-{% for item in items %}
+{% for item in cart_items %}
     <div class="product">
       <div class="product-image">
         <img src="{{ item.img }}">
@@ -26,13 +26,16 @@
       </div>
       <div class="product-price">{{ item.price }}</div>
       <div class="product-quantity">
-        <input type="number" value="1" min="1">
+          <input class="product-quantity-number" type="number" value="1" min="1">
       </div>
       <div class="product-removal">
-        <button class="remove-product">
-          Remove
-        </button>
+        <form class="" action="/cart/{{ item._id }}/delete" method="post">
+          <button class="remove-product">Remove</button>
+        </form>
       </div>
+
+
+
       <div class="product-line-price">{{ item.price }}</div>
     </div>
 {% endfor %}

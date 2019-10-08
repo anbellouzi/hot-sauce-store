@@ -62,15 +62,20 @@ def item_display(item_id):
 
 @app.route('/hotsauce/shop/item/shopping_cart/<item_id>', methods=['POST', 'GET'])
 @app.route('/shop/item/shopping_cart/<item_id>', methods=['POST', 'GET'])
-def shopping_cart(item_id):
+def add_shopping_cart(item_id):
     """Show a single playlist."""
     item = items.find_one({'_id': ObjectId(item_id)})
+    # item.update = ({'quantity': 1})
     cart.item = item
     cart.save(item)
     cart_items = cart.find()
+    return render_template('shopping_cart.html', cart_items=cart_items)
 
-    return render_template('shopping_cart.html', items=cart_items)
-
+@app.route('/shopping_cart/<item_id>', methods=['POST', 'GET'])
+def show_shopping_cart(item_id):
+    """Show a single playlist."""
+    cart_items = cart.find()
+    return render_template('shopping_cart.html', cart_items=cart_items)
 
 @app.route('/items/<item_id>/edit', methods=['POST'])
 def items_edit(item_id):
@@ -98,6 +103,12 @@ def item_delete(item_id):
     """Delete one item."""
     items.delete_one({'_id': ObjectId(item_id)})
     return redirect(url_for('hot_sauce_index'))
+
+@app.route('/cart/<cart_id>/delete', methods=['POST'])
+def cart_delete(cart_id):
+    """Delete one item."""
+    cart.delete_one({'_id': ObjectId(cart_id)})
+    return redirect(url_for('show_shopping_cart', item_id=cart_id))
 
 
 #

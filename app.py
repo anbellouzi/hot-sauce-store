@@ -50,11 +50,11 @@ def playlists_submit():
         'created_at': datetime.now()
     }
     item_id = items.insert_one(item).inserted_id
-    return redirect(url_for('item_display', item_id=item_id))
+    return redirect(url_for('item_show', item_id=item_id))
 
 @app.route('/shop/item/<item_id>', methods=['POST', 'GET'])
 @app.route('/hotsauce/shop/item/<item_id>', methods=['POST', 'GET'])
-def item_display(item_id):
+def item_show(item_id):
     """Show a single playlist."""
     item = items.find_one({'_id': ObjectId(item_id)})
     item_comments = comments.find({'item_id': ObjectId(item_id)})
@@ -68,13 +68,24 @@ def add_shopping_cart(item_id):
     cart.item = item
     cart.save(item)
     cart_items = cart.find()
-    return render_template('shopping_cart.html', cart_items=cart_items)
+    total = 0
+    for item in cart_items:
+        total += int(item['price'])
+
+    cart_items = cart.find()
+    return render_template('shopping_cart.html', cart_items=cart_items, total=total)
+
 
 @app.route('/shopping_cart/<item_id>', methods=['POST', 'GET'])
 def show_shopping_cart(item_id):
     """Show a single playlist."""
     cart_items = cart.find()
-    return render_template('shopping_cart.html', cart_items=cart_items)
+    total = 0
+    for item in cart_items:
+        total += int(item['price'])
+
+    cart_items = cart.find()
+    return render_template('shopping_cart.html', cart_items=cart_items, total=total)
 
 @app.route('/items/<item_id>/edit', methods=['POST'])
 def items_edit(item_id):
@@ -94,7 +105,7 @@ def items_update(item_id):
     items.update_one(
         {'_id': ObjectId(item_id)},
         {'$set': updated_item})
-    return redirect(url_for('item_display', item_id=item_id))
+    return redirect(url_for('item_show', item_id=item_id))
 
 
 @app.route('/items/<item_id>/delete', methods=['POST'])
@@ -107,28 +118,31 @@ def item_delete(item_id):
 def cart_delete(cart_id):
     """Delete one item."""
     cart.delete_one({'_id': ObjectId(cart_id)})
+
     return redirect(url_for('show_shopping_cart', item_id=cart_id))
 
 
-# 
-# @app.route('/item/comments', methods=['POST'])
-# def comments_new():
-#     """Submit a new comment."""
-#     comment = {
-#         'title': request.form.get('title'),
-#         'content': request.form.get('content'),
-#         'item_id': request.form.get('item_id')
-#     }
-#     comment_id = comments.insert_one(comment).inserted_id
-#     return redirect(url_for('show_single_item', item_id=request.form.get('item_id')))
-#
-# @app.route('/item/comments/<comment_id>', methods=['POST'])
-# def comments_delete(comment_id):
-#     """Action to delete a comment."""
-#     comment = comments.find_one({'_id': ObjectId(comment_id)})
-#     comments.delete_one({'_id': ObjectId(comment_id)})
-#     return redirect(url_for('show_single_item', item_id=comment.get('item_id')))
-#
+@app.route('/item/comments', methods=['POST'])
+def comments_new():
+    """Submit a new comment."""
+    comment = {
+        'title': request.form.get('title'),
+        'content': request.form.get('content'),
+        'created_at': datetime.now(),
+        'item_id': ObjectId(request.form.get('item_id'))
+
+    }
+    comment_id = comments.insert_one(comment).inserted_id
+
+    return redirect(url_for('item_show', item_id=request.form.get('item_id')))
+
+@app.route('/item/comments/<comment_id>', methods=['POST'])
+def comments_delete(comment_id):
+    """Action to delete a comment."""
+    comment = comments.find_one({'_id': ObjectId(comment_id)})
+    comments.delete_one({'_id': ObjectId(comment_id)})
+    return redirect(url_for('item_show', item_id=comment.get('item_id')))
+
 
 
 

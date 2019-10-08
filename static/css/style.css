@@ -1,3 +1,23 @@
+
+
+.comment-wrapper .panel-body {
+    max-height:650px;
+    width: 100%;
+    overflow:auto;
+}
+
+.comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+}
+
+.comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
+}
+
+
 #banner {
   height: 400px;
   width: 100%;
@@ -9,15 +29,16 @@
   text-align: center;
 }
 
-.home_list, .action_buttons {
+.home_list, .action_buttons, .comment_action_buttons ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
-.home_list li, .action_buttons li {
+.home_list li, .action_buttons li, .comment_action_buttons li{
   float: left
 }
+
 blockquote {
   width: 900px;
   margin: 0 auto;
@@ -27,7 +48,7 @@ blockquote {
 .btn:hover {
   background-color: #8b0000;
 }
-.action_buttons li {
+.action_buttons li, .comment_action_buttons li {
   margin: 5px;
 }
 

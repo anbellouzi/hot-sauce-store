@@ -1,12 +1,50 @@
 <!-- templates/partials/comment.html -->
 
-<div class='card'>
-    <div class='card-block'>
-        <h4 class='card-title'>{{ comment.title }}</h4>
-        <p class='card-text'>{{ comment.content }}</p>
-        <!-- Delete link -->
-        <p><form method='POST' action='/playlists/comments/{{ comment._id }}'>
-            <button class='btn btn-link' type='submit'>Delete</button>
-        </form></p>
+
+
+
+<div class="row bootstrap snippets">
+    <div class="col-md-6 col-md-offset-2 col-sm-12">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Comments
+                </div>
+                <div class="panel-body">
+                    <div class="clearfix"></div>
+                    <hr>
+                    <ul class="media-list">
+                        <li class="media">
+                            <a href="#" class="pull-left">
+                                <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                            </a>
+                            <div class="media-body">
+                                <span class="text-muted pull-right">
+                                  {%if comment.created_at %}
+                                    <small class="text-muted">{{comment.created_at.strftime('%B, %d, %Y') }}
+                                    at {{ items.created_at.strftime('%I:%M %p') }}
+                                    </small>
+                                  {% endif %}
+                                </span>
+                                <strong class="text-success">{{ comment.title }}</strong>
+                                <p>
+                                    {{ comment.content }}
+                                </p>
+                            </div>
+                        </li>
+                        <div class="comment_action_buttons">
+                          <ul>
+                            <li><p><form method='POST' action='/item/comments/{{ comment._id }}'>
+                                <button class='btn btn-link' type='submit'>Delete</button>
+                            </form></p></li>
+                          </ul>
+
+                        </div>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

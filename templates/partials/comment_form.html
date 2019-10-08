@@ -1,7 +1,7 @@
 <!-- templates/partials/comment_form.html -->
 
 <form action='/item/comments' method='post'>
-  <input type='hidden' value='{{ item_id }}' name='item_id'/>
+  <input type='hidden' value='{{ items._id }}' name='item_id'/>
     <fieldset>
         <legend>Add a Comment</legend>
         <!-- TITLE -->

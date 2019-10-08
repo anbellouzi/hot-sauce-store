@@ -42,12 +42,12 @@
 
         {% include 'partials/comment_form.html' %}
 
+        {% for comment in comments %}
+            {% include 'partials/comment.html' %}
+        {% endfor %}
     </div>
 
-    <!-- Show Comments -->
-    <!-- {% for comment in comments %}
-        {% include 'partials/comment.html' %}
-    {% endfor %} -->
+
 
 </div>
 {% endblock %}

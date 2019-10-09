@@ -65,7 +65,7 @@ def add_shopping_cart(item_id):
         try:
            total += int(item['price'])
         except ValueError:
-            total += int(item['price'])
+            print(ValueError)
 
 
     cart_items = cart.find()

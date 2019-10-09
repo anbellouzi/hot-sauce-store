@@ -44,16 +44,16 @@ def item_submit():
     item_id = items.insert_one(item).inserted_id
     return redirect(url_for('item_show', item_id=item_id))
 
-@app.route('/shop/item/<item_id>', methods=['POST', 'GET'])
-@app.route('/hotsauce/shop/item/<item_id>', methods=['POST', 'GET'])
+@app.route('/shop/item/<item_id>')
+@app.route('/hotsauce/shop/item/<item_id>')
 def item_show(item_id):
     """Show a single playlist."""
     item = items.find_one({'_id': ObjectId(item_id)})
     item_comments = comments.find({'item_id': ObjectId(item_id)})
     return render_template('show_single_item.html', items=item, comments=item_comments)
 
-@app.route('/hotsauce/shop/item/shopping_cart/<item_id>', methods=['POST', 'GET'])
-@app.route('/shop/item/shopping_cart/<item_id>', methods=['POST', 'GET'])
+# @app.route('/hotsauce/shop/item/shopping_cart/<item_id>', methods=['POST'])
+@app.route('/shopping_cart/<item_id>', methods=['POST'])
 def add_shopping_cart(item_id):
     """Show a single playlist."""
     item = items.find_one({'_id': ObjectId(item_id)})
@@ -68,7 +68,7 @@ def add_shopping_cart(item_id):
     return render_template('shopping_cart.html', cart_items=cart_items, total=total)
 
 
-@app.route('/shopping_cart/<item_id>', methods=['POST', 'GET'])
+@app.route('/shopping_cart/<item_id>')
 def show_shopping_cart(item_id):
     """Show a single playlist."""
     cart_items = cart.find()

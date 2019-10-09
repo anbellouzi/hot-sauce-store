@@ -63,7 +63,7 @@
   {% for item in items %}
     <li>
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src='{{ item.img }}' alt="Card image cap">
+        <img class="card-img-top" src='{{ item.img }}' alt={{item.title}}>
         <div class="card-body">
           <h5 class="card-title">{{ item.title }}</h5>
           <p class="card-text">{{ item.description }}</p>

@@ -51,7 +51,9 @@ blockquote {
 .action_buttons li, .comment_action_buttons li {
   margin: 5px;
 }
-
+.card {
+  height: 500px;
+}
 
 
 

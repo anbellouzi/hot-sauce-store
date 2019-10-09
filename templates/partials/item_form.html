@@ -10,7 +10,8 @@
     <!-- DESCRIPTION -->
     <div class='form-group'>
         <label for='description'>Description</label><br>
-        <input class='form-control' id='description' type='text' name='description' value='{{ item.description }}' />
+        <!-- <input class='form-control' id='description' type='text' name='description' value='{{ item.description }}' /> -->
+        <textarea class='form-control' id='description' name='description' rows='10' />{{ item.description }}</textarea>
     </div>
 
     <!-- Price -->
@@ -22,8 +23,8 @@
     <!-- DESCRIPTION -->
     <div class='form-group'>
         <label for='playlist-videos'>Images</label><br/>
-        <p class='text-muted'>Add image source</p>
-        <textarea class='form-control' id='playlist-img' name='images' rows='10' />{{ item.img }}</textarea>
+        <p class='text-muted'>Add image source: format https://www.website.com/image.jpg</p>
+        <textarea class='form-control' id='item-img' name='images' rows='3' />{{ item.img }}</textarea>
     </div>
 </fieldset>
 

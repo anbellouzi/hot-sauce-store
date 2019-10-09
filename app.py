@@ -15,14 +15,6 @@ comments = db.comments
 
 app = Flask(__name__)
 
-# items = [
-#     { 'title': 'Hot sauce', 'description': 'hottest sauce on the planet', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/71Jsiqz0aiL._SL1500_.jpg', 'item_id': '1'},
-#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '12'},
-#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '123'},
-#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '1234'},
-#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '12345'},
-#     { 'title': 'Sriratcha', 'description': 'Dont mess with it very hot !', 'price': '100', 'img': 'https://images-na.ssl-images-amazon.com/images/I/41MuzdQojXL._SX425_.jpg', 'item_id': '123456'}
-# ]
 
 @app.route('/')
 def hot_sauce_index():
@@ -35,12 +27,12 @@ def hot_sauce_show():
     return render_template('shop.html', items=items.find())
 
 @app.route('/item/new')
-def playlists_new():
+def item_new():
     """Create a new item."""
     return render_template('new_item.html', item={}, title='New Item')
 
 @app.route('/items', methods=['POST'])
-def playlists_submit():
+def item_submit():
     """Submit a new playlist."""
     item = {
         'title': request.form.get('title'),

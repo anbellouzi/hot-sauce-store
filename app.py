@@ -62,7 +62,7 @@ def add_shopping_cart(item_id):
     cart_items = cart.find()
     total = 0
     for item in cart_items:
-        total += int(item['price'])
+        total += float(item['price'])
         # try:
         #    total += int(item['price'])
         # except ValueError:
@@ -79,7 +79,7 @@ def show_shopping_cart(item_id):
     cart_items = cart.find()
     total = 0
     for item in cart_items:
-        total += int(item['price'])
+        total += float(item['price'])
         # try:
         #    total += int(item['price'])
         # except ValueError:

@@ -78,7 +78,11 @@ def show_shopping_cart(item_id):
     cart_items = cart.find()
     total = 0
     for item in cart_items:
-        total += int(item['price'])
+        try:
+           total += int(item['price'])
+        except ValueError:
+            print(ValueError)
+
 
     cart_items = cart.find()
     return render_template('shopping_cart.html', cart_items=cart_items, total=total)

@@ -39,7 +39,8 @@ def item_submit():
         'description': request.form.get('description'),
         'price': request.form.get('price'),
         'img': request.form.get('images'),
-        'created_at': datetime.now()
+        # 'date': datetime.now().strftime('%A, %d %B, %Y'),
+        # 'time': datetime.now().strftime('%I:%M %p')
     }
     item_id = items.insert_one(item).inserted_id
     return redirect(url_for('item_show', item_id=item_id))
@@ -63,11 +64,6 @@ def add_shopping_cart(item_id):
     total = 0
     for item in cart_items:
         total += int(float(item['price']))
-        # try:
-        #    total += int(item['price'])
-        # except ValueError:
-        #     print(ValueError)
-
 
     cart_items = cart.find()
     return render_template('shopping_cart.html', cart_items=cart_items, total=total)
@@ -80,16 +76,11 @@ def show_shopping_cart(item_id):
     total = 0
     for item in cart_items:
         total += int(float(item['price']))
-        # try:
-        #    total += int(item['price'])
-        # except ValueError:
-        #     print(ValueError)
-
 
     cart_items = cart.find()
     return render_template('shopping_cart.html', cart_items=cart_items, total=total)
 
-@app.route('/items/<item_id>/edit', methods=['POST'])
+@app.route('/items/<item_id>/edit', methods=['POST', 'GET'])
 def items_edit(item_id):
     """Show the edit form for a item."""
     item = items.find_one({'_id': ObjectId(item_id)})
@@ -132,7 +123,6 @@ def comments_new():
         'content': request.form.get('content'),
         'created_at': datetime.now(),
         'item_id': ObjectId(request.form.get('item_id'))
-
     }
     comment_id = comments.insert_one(comment).inserted_id
 

@@ -14,17 +14,17 @@
         <textarea class='form-control' id='description' name='description' rows='10' />{{ item.description }}</textarea>
     </div>
 
-    <!-- Price -->
-    <div class='form-group'>
-        <label for='description'>Price</label><br>
-        <input class='form-control' id='price' type='number' name='price' value='{{ item.price }}' />
-    </div>
-
     <!-- DESCRIPTION -->
     <div class='form-group'>
         <label for='playlist-videos'>Images</label><br/>
         <p class='text-muted'>Add image source: format https://www.website.com/image.jpg</p>
         <textarea class='form-control' id='item-img' name='images' rows='3' />{{ item.img }}</textarea>
+    </div>
+
+    <!-- Price -->
+    <div class='form-group'>
+        <label for='description'>Price</label><br>
+        <input class='form-control' id='price' type='number' name='price' value='{{ item.price }}' />
     </div>
 </fieldset>
 

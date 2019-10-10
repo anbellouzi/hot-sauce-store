@@ -11,10 +11,10 @@
           <img  style="width:300px;heigth:300px;"src="{{ items.img }}" alt="">
       </div></div>
 
-      {% if items.created_at %}
-      <p class='text-muted'>Created on {{ items.created_at.strftime('%A, %d %B, %Y') }}
-        at {{ items.created_at.strftime('%I:%M %p') }}</p>
-      {% endif %}
+      <!-- {% if items.date and items.time %}
+      <p class='text-muted'>Created on {{ items.date}}
+        at {{ items.time}}</p>
+      {% endif %} -->
 
         <h2>{{ items.description }}</h2>
 
